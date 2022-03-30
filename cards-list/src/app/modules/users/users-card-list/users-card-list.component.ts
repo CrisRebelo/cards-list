@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Entity } from '../../../shared/data-models/entity.models';
 
 @Component({
   selector: 'app-users-card-list',
@@ -6,10 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./users-card-list.component.scss']
 })
 export class UsersCardListComponent implements OnInit {
+  @Input() userList: Entity[] = [];
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
 }

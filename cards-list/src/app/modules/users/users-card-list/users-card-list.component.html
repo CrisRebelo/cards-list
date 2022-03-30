@@ -1,1 +1,5 @@
-<p>users-card-list works!</p>
+<div class="d-flex flex-row flex-wrap">
+    <div class="col-xl-4 col-lg-6 col-12 p-4" *ngFor="let user of userList">
+        <app-entity-details-card [entity]="user"></app-entity-details-card>
+    </div>
+</div>

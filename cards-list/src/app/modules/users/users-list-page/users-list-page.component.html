@@ -1,5 +1,9 @@
-<ng-container *ngIf="usersList$ | async as userList">
-    <app-users-card-list [userList]="userList"></app-users-card-list>
+<ng-container *ngIf="{
+    userList: usersList$ | async,
+    queryParams: queryParams$ | async
+    } as data">
+    <app-users-card-list [userList]="data.userList"></app-users-card-list>
+    <app-pagination-footer class="float-end" *ngIf="requestCounters" [lineCount]="requestCounters.per_page" [total]="requestCounters.total"></app-pagination-footer>
 </ng-container>
 
 <div *ngIf="isLoading" class="spinner-border" role="status">

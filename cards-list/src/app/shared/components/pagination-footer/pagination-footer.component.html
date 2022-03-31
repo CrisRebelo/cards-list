@@ -1,0 +1,8 @@
+<ng-container *ngIf="queryParams$ | async as params">
+
+    <div class="d-flex flex-row p-3">
+        <app-page-size class="mx-4"></app-page-size>
+        <app-pagination [total]="total"></app-pagination>
+    </div>
+
+</ng-container>

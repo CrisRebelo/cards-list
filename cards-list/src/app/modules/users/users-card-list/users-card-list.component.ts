@@ -7,7 +7,7 @@ import { Entity } from '../../../shared/data-models/entity.models';
   styleUrls: ['./users-card-list.component.scss']
 })
 export class UsersCardListComponent implements OnInit {
-  @Input() userList: Entity[] = [];
+  @Input() userList: Entity[] | null = [];
 
   ngOnInit(): void { }
 

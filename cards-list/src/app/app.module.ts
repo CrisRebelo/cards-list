@@ -4,6 +4,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { FormsModule } from '@angular/forms';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -12,6 +16,9 @@ import { AppComponent } from './app.component';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
+    NgbModule,
+    NgSelectModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

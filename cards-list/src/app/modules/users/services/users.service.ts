@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, switchMap } from 'rxjs/operators';
 import { MinifiedCount } from 'src/app/shared/data-models/minified-count.models';
 import { Entity } from '../../../shared/data-models/entity.models';
 

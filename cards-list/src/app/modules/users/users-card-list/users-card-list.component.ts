@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
-import { map, Observable } from 'rxjs';
+import { Params } from '@angular/router';
+import { Observable } from 'rxjs';
 import { Entity } from '../../../shared/data-models/entity.models';
 
 @Component({
@@ -16,10 +16,11 @@ export class UsersCardListComponent implements OnInit, OnChanges {
   userFilter: string = '';
   unchangedUserList: Entity[] | undefined = [];
 
-  constructor() { }
-
   filterUsers = (searchParam: string) => {
-    const userList = this.unchangedUserList?.filter(user => user.first_name.includes(searchParam) || user.last_name.includes(searchParam) || user.email.includes(searchParam));
+    const userList = this.unchangedUserList?.filter(user =>
+      user.first_name.includes(searchParam) ||
+      user.last_name.includes(searchParam) ||
+      user.email.includes(searchParam));
     return userList;
   }
 

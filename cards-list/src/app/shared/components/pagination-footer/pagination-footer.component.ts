@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { map, Observable } from 'rxjs';
+import { NavigationService } from '../../services/navigation.service';
+import { PaginationService } from '../../services/pagination.service';
 
 @Component({
   selector: 'app-pagination-footer',
@@ -16,15 +18,9 @@ export class PaginationFooterComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
+    private navigationService: NavigationService,
+    private paginationService: PaginationService
   ) { }
-
-  hasQueryParams(params: Params) {
-    if (!params['Skip'] || !params['Take']) {
-      return false;
-    }
-    return true;
-  }
 
   setQueryParams() {
     return {
@@ -33,21 +29,11 @@ export class PaginationFooterComponent implements OnInit {
     }
   }
 
-  navigate() {
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: this.setQueryParams(),
-      queryParamsHandling: 'merge',
-      skipLocationChange: false,
-      replaceUrl: true
-    });
-  }
-
   ngOnInit(): void {
     this.queryParams$ = this.route.queryParams.pipe(
       map(params => {
-        if ( !this.hasQueryParams(params)) {
-          this.navigate();
+        if ( !this.paginationService.hasPagination(params)) {
+          this.navigationService.navigate(this.route, this.setQueryParams());
         }
         return params;
       })

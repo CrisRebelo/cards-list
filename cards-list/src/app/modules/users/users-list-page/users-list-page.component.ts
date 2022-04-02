@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { catchError, finalize, map, Observable, of, switchMap } from 'rxjs';
-import { MinifiedCount, RequestCounters } from 'src/app/shared/data-models/minified-count.models';
+import { RequestCounters } from 'src/app/shared/data-models/minified-count.models';
+import { PaginationService } from 'src/app/shared/services/pagination.service';
 import { Entity } from '../../../shared/data-models/entity.models';
 import { UsersService } from '../services/users.service';
 
@@ -27,21 +28,9 @@ export class UsersListPageComponent implements OnInit {
 
   constructor(
     private usersService: UsersService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private paginationService: PaginationService,
   ) { }
-
-  setPagination(data: MinifiedCount<Entity>) {
-    this.requestCounters = {
-      total: data.total,
-      total_pages: data.total_pages,
-      page: data.page,
-      per_page: data.per_page
-    }
-  }
-
-  paginate = (array: Entity[], page_size: number, page_number: number) => {
-    return array.slice(page_number * page_size, page_number * page_size + page_size);
-  };
 
   getUsers(pagination: Params) {
     this.isLoading = true;
@@ -49,9 +38,10 @@ export class UsersListPageComponent implements OnInit {
       switchMap((usersListData) => {
         return of(usersListData).pipe(
           map((usersListData) => {
-            this.setPagination(usersListData);
-            const page = +pagination['Skip'] / pagination['Take'];
-            const paginatedData = this.paginate(usersListData.data, +pagination['Take'], page);
+            this.requestCounters = this.paginationService.setPagination(usersListData);
+            const pageSize = +pagination['Take'];
+            const skip = +pagination['Skip'];
+            const paginatedData = this.paginationService.paginate(usersListData.data, pageSize, skip);
             return paginatedData;
           }),
           catchError((error) => {
@@ -69,17 +59,10 @@ export class UsersListPageComponent implements OnInit {
     this.searchParam = serachParam;
   }
 
-  hasQueryParams(params: Params) {
-    if (!params['Skip'] || !params['Take']) {
-      return false;
-    }
-    return true;
-  }
-
   ngOnInit() {
     this.queryParams$ = this.route.queryParams.pipe(
       map(params => {
-        if ( !this.hasQueryParams(params)) return params;
+        if ( !this.paginationService.hasPagination(params)) return params;
         this.getUsers(params);
         return params;
       })

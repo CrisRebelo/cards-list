@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { map, Observable } from 'rxjs';
 import { Pagination } from '../../data-models/pagination.models';
+import { NavigationService } from '../../services/navigation.service';
 
 @Component({
   selector: 'app-pagination',
@@ -21,7 +22,7 @@ export class PaginationComponent implements OnInit {
 
   constructor (
     private route: ActivatedRoute,
-    private router: Router
+    private navigationService: NavigationService
   ) { }
 
   changePage(page: number) {
@@ -37,13 +38,7 @@ export class PaginationComponent implements OnInit {
       Skip: Math.round(setSkip) * pagination.Take,
     };
 
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: queryParams,
-      queryParamsHandling: 'merge',
-      skipLocationChange: false,
-      replaceUrl: true
-    });
+    this.navigationService.navigate(this.route, queryParams);
   }
 
   ngOnInit() {

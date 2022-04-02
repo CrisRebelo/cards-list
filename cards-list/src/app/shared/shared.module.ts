@@ -7,13 +7,14 @@ import { PageSizeComponent } from './components/page-size/page-size.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
-
+import { FilterByStringComponent } from './components/filter-by-string/filter-by-string.component';
 @NgModule({
   declarations: [
     EntityDetailsCardComponent,
     PaginationFooterComponent,
     PaginationComponent,
-    PageSizeComponent
+    PageSizeComponent,
+    FilterByStringComponent
   ],
   imports: [
     CommonModule,
@@ -23,7 +24,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
   ],
   exports: [
     EntityDetailsCardComponent,
-    PaginationFooterComponent
+    PaginationFooterComponent,
+    FilterByStringComponent
   ]
 })
 export class SharedModule { }

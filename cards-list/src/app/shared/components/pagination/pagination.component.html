@@ -1,7 +1,7 @@
 <ng-container *ngIf="(pagination$ | async) as pagination">
-    <ngb-pagination *ngIf="total / pagination.PageSize > 1"
+    <ngb-pagination *ngIf="total / pagination.Take > 1"
       class="float-right"
-      [page]="pagination.Page || 1" [pageSize]="pagination.PageSize"
+      [page]="pagination.Page || 1" [pageSize]="pagination.Take"
       [maxSize]="3"
       [collectionSize]="total" (pageChange)="changePage($event)">
     </ngb-pagination>

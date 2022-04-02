@@ -1,7 +1,7 @@
 <ng-container *ngIf="(pagination$ | async) as pagination">
     <div class="d-flex align-items-center">
       <small class="text-muted mx-2">Show</small>
-      <ng-select [ngModel]="pagination.PageSize"
+      <ng-select [ngModel]="pagination.Take"
       class="ng-select-secondary ng-select-sm" style="width: 72px;" [clearable]="false"
           (change)="changePageSize($event)">
           <ng-option value="5"> 5</ng-option>

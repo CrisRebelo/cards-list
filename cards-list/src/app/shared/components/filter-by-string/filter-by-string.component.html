@@ -1,0 +1,14 @@
+<form (ngSubmit)="filterBySearch()" class="h-100">
+    <label >Filter User List</label>
+    <div class="input-group">
+        <input
+            id="userListFilter"
+            class="form-control"
+            type="text"
+            [(ngModel)]="searchText"
+            name="search">
+        <button *ngIf="searchText !== ''" type="button" (click)="clearSearch()" class="btn bg-transparent" style="margin-left: -40px; z-index: 100;">
+            x
+        </button>
+    </div>
+</form>

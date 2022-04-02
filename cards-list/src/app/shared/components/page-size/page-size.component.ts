@@ -14,7 +14,7 @@ export class PageSizeComponent {
 
   pagination$: Observable<Pagination>;
   pagination: Pagination = {
-    PageSize: 10
+    Take: 10
   }
 
   constructor(
@@ -26,7 +26,7 @@ export class PageSizeComponent {
       map( (params: Params) => {
 
         this.pagination =  {
-          PageSize: params['Take'] ? params['Take'] : this.pagination.PageSize
+          Take: params['Take'] ? params['Take'] : this.pagination.Take
         };
         return this.pagination;
       })

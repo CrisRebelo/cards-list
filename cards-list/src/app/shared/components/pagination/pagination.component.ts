@@ -16,7 +16,7 @@ export class PaginationComponent implements OnInit {
   public pagination: Pagination = {
     Page: 1,
     CollectionSize: 0,
-    PageSize: 10
+    Take: 10
   };
 
   constructor (
@@ -32,9 +32,9 @@ export class PaginationComponent implements OnInit {
 
     const setSkip = pagination.Page ? pagination.Page - 1 : 1;
     const queryParams = {
-      Take: pagination.PageSize,
+      Take: pagination.Take,
       ...this.route.snapshot.queryParams,
-      Skip: Math.round(setSkip) * pagination.PageSize,
+      Skip: Math.round(setSkip) * pagination.Take,
     };
 
     this.router.navigate([], {
@@ -50,10 +50,10 @@ export class PaginationComponent implements OnInit {
     this.pagination$ = this.route.queryParams.pipe(
       map( (params: Params) => {
 
-        const take = params['Take'] ? params['Take'] : this.pagination.PageSize;
+        const take = params['Take'] ? params['Take'] : this.pagination.Take;
         this.pagination =  {
           Page:  params['Skip'] && params['Take'] ? +params['Skip'] / params['Take'] + 1 : this.pagination.Page,
-          PageSize: take
+          Take: take
         };
         return this.pagination;
       })

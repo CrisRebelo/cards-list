@@ -23,6 +23,7 @@ export class UsersListPageComponent implements OnInit {
     page: 1,
     per_page: 0
   };
+  searchParam = '';
 
   constructor(
     private usersService: UsersService,
@@ -38,14 +39,20 @@ export class UsersListPageComponent implements OnInit {
     }
   }
 
-  getUsers() {
+  paginate = (array: Entity[], page_size: number, page_number: number) => {
+    return array.slice(page_number * page_size, page_number * page_size + page_size);
+  };
+
+  getUsers(pagination: Params) {
     this.isLoading = true;
     this.usersList$ = this.usersService.getUsers().pipe(
       switchMap((usersListData) => {
         return of(usersListData).pipe(
           map((usersListData) => {
             this.setPagination(usersListData);
-            return usersListData.data;
+            const page = +pagination['Skip'] / pagination['Take'];
+            const paginatedData = this.paginate(usersListData.data, +pagination['Take'], page);
+            return paginatedData;
           }),
           catchError((error) => {
             return of(error);
@@ -56,6 +63,10 @@ export class UsersListPageComponent implements OnInit {
         )
       }),
     );
+  }
+
+  filterUserList(serachParam: string) {
+    this.searchParam = serachParam;
   }
 
   hasQueryParams(params: Params) {
@@ -69,8 +80,7 @@ export class UsersListPageComponent implements OnInit {
     this.queryParams$ = this.route.queryParams.pipe(
       map(params => {
         if ( !this.hasQueryParams(params)) return params;
-
-        this.getUsers();
+        this.getUsers(params);
         return params;
       })
     );

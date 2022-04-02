@@ -2,7 +2,8 @@
     userList: usersList$ | async,
     queryParams: queryParams$ | async
     } as data">
-    <app-users-card-list [userList]="data.userList"></app-users-card-list>
+    <app-filter-by-string (changeSearchParam)="filterUserList($event)"></app-filter-by-string>
+    <app-users-card-list *ngIf="data.userList" [userList]="data.userList" [searchParam]="searchParam"></app-users-card-list>
     <app-pagination-footer class="float-end" *ngIf="requestCounters" [lineCount]="requestCounters.per_page" [total]="requestCounters.total"></app-pagination-footer>
 </ng-container>
 
